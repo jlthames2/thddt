@@ -8,17 +8,22 @@ class DynamicDocker(object):
     '''Class used to create dynamic deception with containers and Docker'''
 
     def __init__(self):
-        self.containers = ['jlthames2/thddt-web', 'jlthames2/thddt-pymodbus']
-        self.numContainers = 3
+        self.containers = ['jlthames2/thddt-web',
+                           'jlthames2/thddt-pymodbus',
+                           'jlthames2/thddt-pubsub',
+                           'jlthames2/thddt-echo']
+
+        self.numContainers = 10
+        self.uniqueContainers = len(self.containers)
         self.sleepTime = 10
         self.portLow = 1000
-        self.portHigh = 2000
+        self.portHigh = 20000
 
 
     def dockerRun(self):
         '''Run the containers.'''
         for x in xrange(0, self.numContainers):
-            index = random.randrange(0,2)
+            index = random.randrange(0, self.uniqueContainers)
             container = self.containers[index]
             port = random.randrange(self.portLow,self.portHigh)
             command = 'docker run -d -p%s:80 %s' % (port, container)
