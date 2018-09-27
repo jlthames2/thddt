@@ -40,17 +40,18 @@ class DynamicDocker(object):
     def run(self):
         '''Endlessly call dockerRun and dockerStop to create random
            containers on random ports.'''
-        while(True):
+
             try:
-                self.dockerRun()
-                time.sleep(self.sleepTime)
-                self.dockerStop()
+                while(True):
+                    self.dockerRun()
+                    time.sleep(self.sleepTime)
+                    self.dockerStop()
+
             except KeyboardInterrupt:
                 print "Interrupt caught. Cleaning up and stopping..."
-            finally:
-                # clean up
                 self.dockerStop()
                 sys.exit(0)
+
 
 
 
