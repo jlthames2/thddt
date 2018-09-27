@@ -10,7 +10,6 @@ class DynamicDocker(object):
     def __init__(self):
         self.containers = ['jlthames2/thddt-web', 'jlthames2/thddt-pymodbus']
         self.numContainers = 3
-        #sleep 10 seconds before respawning
         self.sleepTime = 10
         self.portLow = 1000
         self.portHigh = 2000
@@ -41,16 +40,17 @@ class DynamicDocker(object):
         '''Endlessly call dockerRun and dockerStop to create random
            containers on random ports.'''
 
-            try:
-                while(True):
-                    self.dockerRun()
-                    time.sleep(self.sleepTime)
-                    self.dockerStop()
+        try:
 
-            except KeyboardInterrupt:
-                print "Interrupt caught. Cleaning up and stopping..."
+            while(True):
+                self.dockerRun()
+                time.sleep(self.sleepTime)
                 self.dockerStop()
-                sys.exit(0)
+
+        except KeyboardInterrupt:
+            print "Interrupt caught. Cleaning up and stopping..."
+            self.dockerStop()
+            sys.exit(0)
 
 
 
